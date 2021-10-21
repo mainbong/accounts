@@ -1,5 +1,9 @@
 package accounts
 
+import "errors"
+
+var errNoMoney = errors.New("you have no money")
+
 type Account struct {
 	owner   string
 	balance int
@@ -15,10 +19,13 @@ func (a *Account) Deposit(amount int) {
 }
 
 // Withdraw (출금)
-func (a *Account) Withdraw(amount int) {
+func (a *Account) Withdraw(amount int) error {
 	// 마이너스가 안될때만 출금
 	if a.balance >= amount {
 		a.balance -= amount
+		return nil
+	} else {
+		return errNoMoney
 	}
 }
 
